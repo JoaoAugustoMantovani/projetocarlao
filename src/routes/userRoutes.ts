@@ -5,15 +5,18 @@ import {
   getUserById,
   updateUser,
   deleteUser,
-} from "../controller/userController.js"; // <-- CORRIGIDO AQUI
+} from "../controller/userController.js";
+import { authMiddleware } from "../middleware/authMiddleware.js"; // <-- Importe o middleware
 
 const router = Router();
 
-// Rotas para as operações de CRUD
+// Rotas públicas
 router.post("/", createUser);
 router.get("/", getAllUsers);
 router.get("/:uid", getUserById);
-router.put("/:uid", updateUser);
-router.delete("/:uid", deleteUser);
+
+// Rotas protegidas
+router.put("/:uid", authMiddleware, updateUser); // <-- Aplique o middleware
+router.delete("/:uid", authMiddleware, deleteUser); // <-- Aplique o middleware
 
 export default router;
