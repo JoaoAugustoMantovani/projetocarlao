@@ -28,7 +28,7 @@ PUT http://localhost:3000/users/{{createUserRequest.response.body.id}}
 Content-Type: application/json
 
 {
-  "name": "Antonio Junior"
+  "name": "Cleberson Eugenio"
 }
 
 ### 5. Deletar o usuário recém-criado

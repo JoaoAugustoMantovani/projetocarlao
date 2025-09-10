@@ -35,7 +35,7 @@ export const createUser = async (req: Request, res: Response) => {
     await createValidationCode(newUser.id, validationCode);
 
     // Passo 3: Retornar o novo usuário e o código de validação para teste.
-    res.status(201).json({ ...newUser, validationCode });
+    res.status(201).json("User Created Successfully");
   } catch (error) {
     console.error(error);
     if ((error as any).code === 'P2002') {

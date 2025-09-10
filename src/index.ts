@@ -2,10 +2,9 @@ import express, { Request, Response } from 'express';
 import dotenv from 'dotenv';
 
 
-import userRoutes from '@routes/userRoutes.js';
-import validationUserRoutes from '@routes/validationUserRoutes.js';
-import authRoutes from '@routes/authRoutes.js';
-
+import userRoutes from './routes/userRoutes.js';
+import validationUserRoutes from './routes/validationUserRoutes.js';
+import authRoutes from './routes/authRoutes.js';
 
 dotenv.config();
 
