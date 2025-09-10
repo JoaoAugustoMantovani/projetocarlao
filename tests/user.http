@@ -1,0 +1,36 @@
+### 1. Criar um novo usuário
+# @name createUserRequest
+# Damos um nome à requisição (createUserRequest) para que as próximas possam usar a resposta dela.
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+  "name": "Cleberson Eugenio",
+  "email": "cleberson@example.com",
+  "password": "cleberson123",
+  "isActive": true,
+  "cellphone": "11988079168",
+  "emailValidation": false
+}
+
+### 2. Listar todos os usuários
+# Descrição: Retorna uma lista com todos os usuários cadastrados.
+GET http://localhost:3000/users
+
+### 3. Buscar o usuário recém-criado pelo ID
+# Descrição: Retorna o usuário específico que acabamos de criar.
+# A variável {{createUserRequest.response.body.id}} pega o "id" da resposta da primeira requisição.
+GET http://localhost:3000/users/{{createUserRequest.response.body.id}}
+
+### 4. Atualizar o nome do usuário recém-criado
+# Descrição: Atualiza o nome do usuário que criamos no primeiro passo.
+PUT http://localhost:3000/users/{{createUserRequest.response.body.id}}
+Content-Type: application/json
+
+{
+  "name": "Antonio Junior"
+}
+
+### 5. Deletar o usuário recém-criado
+# Descrição: Deleta o usuário que criamos no primeiro passo.
+DELETE http://localhost:3000/users/{{createUserRequest.response.body.id}}'

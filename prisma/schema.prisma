@@ -1,0 +1,53 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              Int              @id @default(autoincrement())
+  name            String
+  password        String
+  email           String           @unique
+  isActive        Boolean
+  createdat       DateTime         @default(now())
+  updatedat       DateTime         @updatedAt
+  cellphone       String
+  emailValidation Boolean          @default(false)
+  user_validation ValidationUser[]
+
+  @@map("users")
+}
+
+model ValidationUser {
+  id              Int      @id @default(autoincrement())
+  code            String   @db.VarChar(10)
+  registerdate    DateTime @default(now())
+  validationdate  DateTime?
+  userid          Int
+  validation_user User     @relation(fields: [userid], references: [id])
+  createdat       DateTime @default(now())
+  updatedat       DateTime @updatedAt
+
+  @@map("users_validation")
+}
+
+model SensorReader {
+  id           Int      @id @default(autoincrement())
+  sensor       String
+  value        String
+  registerdate DateTime @default(now())
+  createdat    DateTime @default(now())
+  updatedat    DateTime @updatedAt
+
+  @@map("sensors_reader")
+}

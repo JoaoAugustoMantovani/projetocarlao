@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "module": "nodenext",
+    "target": "esnext",
+    "strict": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "skipLibCheck": true,
+    
+    // --- Configurações mais importantes adicionadas aqui ---
+    "baseUrl": "./src",
+    "paths": {
+      "@routes/*": ["routes/*"]
+      // Você pode adicionar outros atalhos aqui no futuro, como:
+      // "@controllers/*": ["controllers/*"]
+    }
+  },
+  "include": ["src/**/*"],
+  "ts-node": {
+    "esm": true
+  }
+}
