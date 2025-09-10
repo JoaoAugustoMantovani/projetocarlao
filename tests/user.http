@@ -1,3 +1,14 @@
+### 0. Fazer login para obter o token de autenticação
+# @name loginRequest
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "email": "cleberson@example.com",
+  "password": "cleberson123"
+}
+
+
 ### 1. Criar um novo usuário
 # @name createUserRequest
 # Damos um nome à requisição (createUserRequest) para que as próximas possam usar a resposta dela.

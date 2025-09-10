@@ -12,11 +12,12 @@ const router = Router();
 
 // Rotas públicas
 router.post("/", createUser);
-router.get("/", getAllUsers);
-router.get("/:uid", getUserById);
 
-// Rotas protegidas
-router.put("/:uid", authMiddleware, updateUser); // <-- Aplique o middleware
-router.delete("/:uid", authMiddleware, deleteUser); // <-- Aplique o middleware
+// Rotas protegidas - Todas as outras rotas de usuário
+router.get("/", authMiddleware, getAllUsers);
+router.get("/:uid", authMiddleware, getUserById);
+router.put("/:uid", authMiddleware, updateUser);
+router.delete("/:uid", authMiddleware, deleteUser);
+
 
 export default router;
