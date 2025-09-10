@@ -1,4 +1,19 @@
-### 0. Fazer login para obter o token de autenticação
+### 1. Criar um novo usuário (para ter com o que logar)
+# @name createUserRequest
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+  "name": "Cleberson Eugenio",
+  "email": "cleberson@example.com",
+  "password": "cleberson123",
+  "isActive": true,
+  "cellphone": "11988079168"
+}
+
+### SEPARADOR OBRIGATÓRIO ###
+
+### 2. Fazer login para obter o token
 # @name loginRequest
 POST http://localhost:3000/auth/login
 Content-Type: application/json
@@ -8,40 +23,36 @@ Content-Type: application/json
   "password": "cleberson123"
 }
 
+### SEPARADOR OBRIGATÓRIO ###
 
-### 1. Criar um novo usuário
-# @name createUserRequest
-# Damos um nome à requisição (createUserRequest) para que as próximas possam usar a resposta dela.
-POST http://localhost:3000/users
-Content-Type: application/json
-
-{
-  "name": "Cleberson Eugenio",
-  "email": "cleberson@example.com",
-  "password": "cleberson123",
-  "isActive": true,
-  "cellphone": "11988079168",
-  "emailValidation": false
-}
-
-### 2. Listar todos os usuários
-# Descrição: Retorna uma lista com todos os usuários cadastrados.
+### 3. Listar todos os usuários (Rota Protegida)
 GET http://localhost:3000/users
+Authorization: Bearer {{loginRequest.response.body.token}}
 
-### 3. Buscar o usuário recém-criado pelo ID
-# Descrição: Retorna o usuário específico que acabamos de criar.
-# A variável {{createUserRequest.response.body.id}} pega o "id" da resposta da primeira requisição.
-GET http://localhost:3000/users/{{createUserRequest.response.body.id}}
+### SEPARADOR OBRIGATÓRIO ###
 
-### 4. Atualizar o nome do usuário recém-criado
-# Descrição: Atualiza o nome do usuário que criamos no primeiro passo.
-PUT http://localhost:3000/users/{{createUserRequest.response.body.id}}
+### 4. Buscar um usuário pelo ID (Rota Protegida)
+# IMPORTANTE: Substitua o "1" abaixo pelo ID do usuário que você quer testar.
+# Você pode encontrar o ID no seu banco de dados (via phpMyAdmin, DBeaver, etc.)
+# depois de criá-lo com a requisição #1.
+GET http://localhost:3000/users/3
+Authorization: Bearer {{loginRequest.response.body.token}}
+
+### SEPARADOR OBRIGATÓRIO ###
+
+### 5. Atualizar o nome do usuário (Rota Protegida)
+# IMPORTANTE: Substitua o "1" abaixo pelo ID do usuário.
+PUT http://localhost:3000/users/3
 Content-Type: application/json
+Authorization: Bearer {{loginRequest.response.body.token}}
 
 {
-  "name": "Cleberson Eugenio"
+  "name": "Cleberson Junior"
 }
 
-### 5. Deletar o usuário recém-criado
-# Descrição: Deleta o usuário que criamos no primeiro passo.
-DELETE http://localhost:3000/users/{{createUserRequest.response.body.id}}'
+### SEPARADOR OBRIGATÓRIO ###
+
+### 6. Deletar o usuário (Rota Protegida)
+# IMPORTANTE: Substitua o "1" abaixo pelo ID do usuário.
+DELETE http://localhost:3000/users/3
+Authorization: Bearer {{loginRequest.response.body.token}}  

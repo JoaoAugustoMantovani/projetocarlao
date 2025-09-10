@@ -118,13 +118,32 @@ export const updateUser = async (req: Request, res: Response) => {
 // D - Delete a user
 export const deleteUser = async (req: Request, res: Response) => {
   const { uid } = req.params;
+  const userId = Number(uid);
+
+  if (isNaN(userId)) {
+    return res.status(4.00).json({ error: "ID de usuário inválido." });
+  }
 
   try {
-    await prisma.user.delete({
-      where: { id: Number(uid) },
-    });
-    res.status(204).send();
-  } catch (error) {
+    // Usar uma transação para garantir que ambas as operações funcionem
+    await prisma.$transaction([
+      // 1. Deletar os registros de validação associados
+      prisma.validationUser.deleteMany({
+        where: { userid: userId },
+      }),
+      // 2. Deletar o usuário
+      prisma.user.delete({
+        where: { id: userId },
+      }),
+    ]);
+
+    return res.status(200).json({ message: "User Deleted" }); // 204 No Content para sucesso na exclusão
+  } catch (error: any) {
+    // Se o usuário não for encontrado, o Prisma lança um erro com o código P2025
+    if (error.code === 'P2025') {
+      return res.status(404).json({ error: "Usuário não encontrado." });
+    }
+    console.error("Erro ao deletar usuário:", error);
     res.status(500).json({ error: "Erro ao deletar usuário." });
   }
 };
