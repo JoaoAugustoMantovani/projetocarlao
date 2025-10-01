@@ -1,7 +1,10 @@
 import { Router } from 'express'; 
 import * as myController from '../controllers/usersControllers';
+import { authService } from '../controllers/authControllers';
 
 const router = Router();
+
+
 
 router.post('/', myController.create);
 router.get('/', myController.getAll);
