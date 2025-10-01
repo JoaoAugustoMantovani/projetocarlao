@@ -1,39 +1,43 @@
-
-
-GET http://localhost:3000/api/users
+# Variáveis do ambiente
+@baseUrl = http://localhost:3000
+@email = teste_{{$randomInt}}@teste.com
+@password = 123456
+@token =
 
 ###
-GET http://localhost:3000/api/users/1
-
-###
-POST http://localhost:3000/api/users
-Content-Type: application/json; charset=utf-8
+# 1. Criar um novo usuário para o teste
+# @name newUserRequest
+POST {{baseUrl}}/api/users
+Content-Type: application/json
 
 {
-  "login": "teste@gmail.com",
-  "password": "123456789",
-  "name" : "Carlos filho",
-  "apelido": "teste",
-  "cellphone" : "16 99999-1234"
+  "name": "Usuario de Teste",
+  "login": "{{email}}",
+  "password": "{{password}}"
 }
 
 ###
-PUT http://localhost:3000/api/users/1
-Content-Type: application/json; charset=utf-8
+# 2. Fazer login para obter o token JWT
+# O token da resposta será salvo na variável @token
+# @name loginRequest
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
 
 {
-  "login": "projeto@gmail.com",
-  "name": "Projeto Teste",
-  "cellphone": "16 98888-1234",
-  "isActive": true,
-  "isauthorized": false,
-  "emailValidation": false,
-  "role": "CLIENT",
-  "apelido": null,
-  "ultimaAutorizacao": null,
-  "ultimoacesso": null
+  "login": "{{email}}",
+  "password": "{{password}}"
 }
 
-###
-DELETE http://localhost:3000/api/users/2
+> {%
+  client.global.set("token", response.body.token);
+%}
 
+###
+# 3. Testar Rota Protegida - COM TOKEN (Deve funcionar)
+GET {{baseUrl}}/api/users
+Authorization: Bearer {{token}}
+
+
+###
+# 4. Testar Rota Protegida - SEM TOKEN (Deve falhar)
+GET {{baseUrl}}/api/users
