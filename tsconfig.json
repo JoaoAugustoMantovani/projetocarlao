@@ -1,22 +1,12 @@
 {
   "compilerOptions": {
-    "module": "nodenext",
-    "target": "esnext",
+    "target": "es6",
+    "module": "commonjs",
     "strict": true,
-    "outDir": "./dist",
-    "rootDir": "./src",
+    "esModuleInterop": true,
     "skipLibCheck": true,
-    
-    // --- Configurações mais importantes adicionadas aqui ---
-    "baseUrl": "./src",
-    "paths": {
-      "@routes/*": ["routes/*"]
-      // Você pode adicionar outros atalhos aqui no futuro, como:
-      // "@controllers/*": ["controllers/*"]
-    }
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "./dist"
   },
-  "include": ["src/**/*"],
-  "ts-node": {
-    "esm": true
-  }
+  "include": ["src/**/*"]
 }

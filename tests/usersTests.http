@@ -1,0 +1,39 @@
+
+
+GET http://localhost:3000/api/users
+
+###
+GET http://localhost:3000/api/users/1
+
+###
+POST http://localhost:3000/api/users
+Content-Type: application/json; charset=utf-8
+
+{
+  "login": "teste@gmail.com",
+  "password": "123456789",
+  "name" : "Carlos filho",
+  "apelido": "teste",
+  "cellphone" : "16 99999-1234"
+}
+
+###
+PUT http://localhost:3000/api/users/1
+Content-Type: application/json; charset=utf-8
+
+{
+  "login": "projeto@gmail.com",
+  "name": "Projeto Teste",
+  "cellphone": "16 98888-1234",
+  "isActive": true,
+  "isauthorized": false,
+  "emailValidation": false,
+  "role": "CLIENT",
+  "apelido": null,
+  "ultimaAutorizacao": null,
+  "ultimoacesso": null
+}
+
+###
+DELETE http://localhost:3000/api/users/2
+
